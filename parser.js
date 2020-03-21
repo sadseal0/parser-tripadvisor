@@ -1,4 +1,4 @@
-﻿var pause = 1; // пауза в секундах между проверкой каждого ресторана
+﻿var pause = 5; // пауза в секундах между проверкой каждого ресторана
 var pathToSaveFile = 'C:\\text.txt'; // путь к файлу для сохранения
 var startLink = 'https://www.tripadvisor.com/Restaurants-g255104-oa20-New_Zealand.html#LOCATION_LIST';
 
