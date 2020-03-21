@@ -62,7 +62,7 @@ function parser(){
             var link = getBody().querySelector('div[data-test="' + indexListItem + '_list_item"] div>div>div>span a[href^="/Restaurant_Review-"]');
 
             if (link) {
-            	log('Проверяем '+link.innerHTML);
+            	log('Проверяем '+link.textContent);
                 var html = request.get(link.href);
                 var email = extractEmail(html);
                 if (email) {
