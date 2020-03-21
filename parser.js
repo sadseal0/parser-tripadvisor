@@ -26,7 +26,7 @@ var saveEmails = {};
 
 iimPlayCode('URL GOTO=' + startLink);
 while(true){
-    var geoList = window.document.querySelectorAll('ul.geoList li a');
+    var geoList = getBody().querySelectorAll('ul.geoList li a');
     for (var i = 0; i<geoList.length; i++) {
         var a = geoList[i];
         iimPlayCode('TAB OPEN \n TAB T=2');
@@ -34,12 +34,12 @@ while(true){
         parser();
         iimPlayCode('TAB CLOSE');
     }
-    var spritePageNext = window.document.querySelector('.sprite-pageNext');
+    var spritePageNext = getBody().querySelector('.sprite-pageNext');
     if(spritePageNext){
         var oldFirstLink = geoList[0].href;
         spritePageNext.click();
          while(true){
-                var firstLink =  window.document.querySelector('ul.geoList li a');;
+                var firstLink =  getBody().querySelector('ul.geoList li a');;
                 if(firstLink){
                     if(firstLink.href !== oldFirstLink){
                         break;
@@ -106,7 +106,16 @@ function Request() {
 }
 
 function getBody() {
-    return window.document.body;
+    try {
+        return window.document.body;
+    } catch (err) {
+        iimDisplay('Не смогли извлечь код страницы');
+        window.console.error(err);
+        iimPlayCode('PAUSE');
+        iimDisplay('Пробуем повторно');
+        iimPlayCode('WAIT SECONDS=2');
+        return getBody();
+    }
 }
 
 function extractEmail(html) {
