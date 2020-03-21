@@ -73,16 +73,12 @@ function parser(){
         }
         var nextButton = getBody().querySelector('div.pagination a.next')
         if (nextButton) {
-            nextButton.click();
-            while(true){
-            	var currentPage = getBody().querySelector('span.pageNum.current');
-            	if(currentPage){
-            		if(Number(currentPage.getAttribute('data-offset')) === (dataOffset+countItemOnPage)){
-            			break;
-            		}
-            	}
-            	log('Ждем прогрузку страницы');
-            	iimPlayCode('WAIT SECONDS=1');
+            var nextPageButton = getBody().querySelector('a[data-offset="'+(dataOffset+countItemOnPage)+'"]');
+            if(nextPageButton){
+                iimPlayCode('URL GOTO=' + nextPageButton.href);
+            } else {
+                iimDisplay('Не смогли обнаружить ссылку на следующую страницу');
+                iimPlayCode('PAUSE');
             }
         } else {
             log('Обошли все страницы');
