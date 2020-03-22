@@ -55,7 +55,15 @@ while(true){
 }
 
 function parser(){
-    var dataOffset = Number(getBody().querySelector('span.pageNum.current').getAttribute('data-offset'));
+    var pageNumCurrent = getBody().querySelector('span.pageNum.current');
+    if(!pageNumCurrent){
+        iimDisplay('Не смогли извлечь кнопку текущей страницы');
+        iimPlayCode('PAUSE');
+        iimDisplay('Пробуем повторно');
+        iimPlayCode('WAIT SECONDS=2');
+        return parser();
+    }
+    var dataOffset = Number(pageNumCurrent.getAttribute('data-offset'));
     for (;; dataOffset += countItemOnPage) {
         for (var indexListItem = dataOffset + 1; indexListItem < (dataOffset + countItemOnPage); indexListItem++) {
             // parse Restaurant Review
@@ -69,6 +77,8 @@ function parser(){
                     saveEmail(email);
                 }
                 iimPlayCode('WAIT SECONDS=' + pause);
+            } else {
+                iimDisplay('Нет ссылки №'+indexListItem);
             }
         }
         var nextButton = getBody().querySelector('div.pagination a.next')
