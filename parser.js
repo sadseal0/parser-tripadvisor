@@ -56,14 +56,12 @@ while(true){
 
 function parser(){
     var pageNumCurrent = getBody().querySelector('span.pageNum.current');
-    if(!pageNumCurrent){
+    if(pageNumCurrent){
+        var dataOffset = Number(pageNumCurrent.getAttribute('data-offset'));
+    } else {
         iimDisplay('Не смогли извлечь кнопку текущей страницы');
-        iimPlayCode('PAUSE');
-        iimDisplay('Пробуем повторно');
-        iimPlayCode('WAIT SECONDS=2');
-        return parser();
+        var dataOffset = 0;
     }
-    var dataOffset = Number(pageNumCurrent.getAttribute('data-offset'));
     for (;; dataOffset += countItemOnPage) {
         for (var indexListItem = dataOffset + 1; indexListItem < (dataOffset + countItemOnPage); indexListItem++) {
             // parse Restaurant Review
